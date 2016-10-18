@@ -1,40 +1,8 @@
-
-
-
-#messages {
-	height: 50%;
-    overflow-y:scroll;
-	margin-bottom:0px;
-
-	
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
-#messages ul{
-	list-style: none;
-	bottom: 0;
-	left: 0;
-	margin-bottom: 0px;
-
+a {
+  color: #00B7FF;
 }
-
-form{
-	
-	margin: 0px;
-	padding: 0px;
-}
-
-
-#chatbox {
-	padding: 0px;
-	margin-bottom:0px;
-}
-
-#newMsg{
-	padding: 0px;
-	margin-bottom:0px;
-}
-
-
-
-
-
