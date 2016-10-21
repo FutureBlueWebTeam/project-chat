@@ -1,0 +1,106 @@
+<html>
+  <head>
+    <title><%= title %></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="stylesheets/style.css" rel="stylesheet" media="screen">
+    <!-- Bootstrap -->
+    <link href="stylesheets/bootstrap.css" rel="stylesheet" media="screen">
+	<script src="/socket.io/socket.io.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script>
+    var socket = io();
+    //define functions socket.emit sending to server (app.js) and socket.on receiving 
+     // 'new message' is for the id of the socket and $('#new-message') is for the button
+     function sendFunction() {
+     socket.emit('new message', $('#new-msg').val());
+     $('#new-msg').val('');
+    }
+    // 'chat message' is for the id of the socket and $('#new-area') is for the text area
+    socket.on('chat message', function(msg){
+     $('#messages-area').append($('<li>').text(msg));
+    });
+    </script>
+  </head>
+  
+  
+  
+  <body>
+	<nav class="navbar navbar-default">
+	  <div class="container-fluid">
+		<div class="navbar-header">
+		  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+			<span class="sr-only">Toggle navigation</span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+		  </button>
+		  <a class="navbar-brand" href="#"><%= title %></a>
+		</div>
+
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+		  <ul class="nav navbar-nav navbar-right">
+			<li class="dropdown">
+			  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Options <span class="caret"></span></a>
+			  <ul class="dropdown-menu" role="menu">
+				<li><a href="#">Account</a></li>
+				<li><a href="#">Log Out</a></li>
+			  </ul>
+			</li>
+		  </ul>
+		</div>
+	  </div>
+	</nav>
+	
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-7 col-sm-offset-2">
+				<div class="panel panel-default"  >
+					<div class="panel-heading">
+						<h3 class="panel-titile"> Chatroom! </h3>
+					</div>
+					<div class="panel-body" id="chatbox">
+						<div id="messages">
+							<ul id="messages-area">
+									<% for(var i=0; i<msgLog.length; i++) {%>
+									   <li><%= msgLog[i] %></li>
+									<% } %>
+							</ul>
+						</div>
+						<!--need to save the messages to a database on submit, then load the chat log
+							want this to happen asynchronously without reloading the page on every submit 
+							right now the button is being used to submit the message, but the chat is deleted
+							on every reload since it is not connected to a database -->
+						<form id="message-form">	
+						<div class="form-group" id="newMsg">							  
+						  <div class="input-group">
+							<input class="form-control" id="new-msg" type="text" >
+							<span class="input-group-btn">
+								<button type="button" class="btn btn-default btn-lrg" onclick="sendFunction()" >
+								  <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
+								  &nbsp;
+								</button>
+							</span>
+						  </div>
+						</div>
+						</form>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="javascripts/bootstrap.js"></script>
+	<script>
+		//send the form without having to refresh the page
+		$( "#message-form" ).submit(function( event ) {
+		  sendFunction();
+		  event.preventDefault();
+		});
+	</script>
+  </body>
+  
+  
+  
+</html>
